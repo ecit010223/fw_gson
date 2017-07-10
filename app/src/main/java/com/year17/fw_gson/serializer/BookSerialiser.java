@@ -1,4 +1,4 @@
-package com.year17.fw_gson.utils;
+package com.year17.fw_gson.serializer;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -6,9 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.year17.fw_gson.bean.Book;
-
-import org.json.JSONObject;
+import com.year17.fw_gson.serializer.bean.Book;
 
 import java.lang.reflect.Type;
 

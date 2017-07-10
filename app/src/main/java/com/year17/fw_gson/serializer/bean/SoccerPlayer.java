@@ -1,4 +1,4 @@
-package com.year17.fw_gson.bean;
+package com.year17.fw_gson.serializer.bean;
 
 import com.google.gson.annotations.Since;
 import com.google.gson.annotations.Until;

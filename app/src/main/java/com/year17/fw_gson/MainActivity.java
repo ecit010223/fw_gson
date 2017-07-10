@@ -4,6 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.year17.fw_gson.serial_and_deserial.Book;
+import com.year17.fw_gson.serial_and_deserial.BookTypeAdapter;
+
 /**
  * 作者：张玉辉 on 2017/7/10 21:02.
  * 1.Serialization:序列化，使Java对象到Json字符串的过程。
@@ -32,5 +37,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        useTypeAdapter();
+    }
+
+    /** 使用TypeAdapter进行序列化与反序列化 **/
+    private void useTypeAdapter(){
+        final GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(Book.class, new BookTypeAdapter());
+        gsonBuilder.setPrettyPrinting();
+
+        final Gson gson = gsonBuilder.create();
+
+        final Book book = new Book();
+        book.setAuthors(new String[] { "Joshua Bloch", "Neal Gafter" });
+        book.setTitle("Java Puzzlers: Traps, Pitfalls, and Corner Cases");
+        book.setIsbn("978-0321336781");
+
+        final String json = gson.toJson(book);
+        System.out.println("Serialised");
+        System.out.println(json);
+
+        final Book parsedBook = gson.fromJson(json, Book.class);
+        System.out.println("\nDeserialised");
+        System.out.println(parsedBook);
     }
 }
