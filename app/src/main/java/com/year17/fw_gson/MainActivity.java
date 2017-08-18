@@ -3,11 +3,23 @@ package com.year17.fw_gson;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+import com.year17.fw_gson.model.City;
 import com.year17.fw_gson.serial_and_deserial.Book;
 import com.year17.fw_gson.serial_and_deserial.BookTypeAdapter;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
 
 /**
  * 作者：张玉辉 on 2017/7/10 21:02.
@@ -35,13 +47,20 @@ import com.year17.fw_gson.serial_and_deserial.BookTypeAdapter;
  * 6.内部类(或者anonymous class(匿名类)，或者local class(局部类，可以理解为在方法内部声明的类))
  *   的某个字段和外部类的某个字段一样的话，就会被忽视，不会被序列化或者反序列化.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private Button btnParseIO;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initView();
         useTypeAdapter();
+    }
+
+    private void initView(){
+        btnParseIO = (Button)findViewById(R.id.btn_parse_io);
+        btnParseIO.setOnClickListener(this);
     }
 
     /** 使用TypeAdapter进行序列化与反序列化 **/
@@ -64,5 +83,28 @@ public class MainActivity extends AppCompatActivity {
         final Book parsedBook = gson.fromJson(json, Book.class);
         System.out.println("\nDeserialised");
         System.out.println(parsedBook);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_parse_io:
+                parseIO();
+                break;
+        }
+    }
+
+    /** 解析IO数据流 **/
+    private void parseIO(){
+        InputStream stream = null;
+        try{
+            stream = getAssets().open("cities.json");
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        Gson gson = new GsonBuilder().create();
+        JsonElement json = new JsonParser().parse(new InputStreamReader(stream));
+        List<City> cities = gson.fromJson(json,new TypeToken<List<City>>(){}.getType());
+        Log.d(Constants.TAG,cities.toString());
     }
 }

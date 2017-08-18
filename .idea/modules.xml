@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fw_gson.iml" filepath="$PROJECT_DIR$/fw_gson.iml" />
       <module fileurl="file://$PROJECT_DIR$/fw_gson.iml" filepath="$PROJECT_DIR$/fw_gson.iml" />
     </modules>
   </component>
